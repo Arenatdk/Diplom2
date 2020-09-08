@@ -1,0 +1,112 @@
+﻿@model IEnumerable<WebApplication1.Models.MyFile>
+@{
+    ViewData["Title"] = "Myfiles";
+    Layout = "~/Views/Shared/_SettingsLayout.cshtml";
+}
+
+
+
+
+
+
+@*    <h3>Все пользователи</h3>
+    @foreach (var p in Model)
+    {
+    <div>
+
+                        <a href="@Url.Action("GetVirtualFile", "ConferenceSettings", new {  key = p.Path }, null)">@p.Name </a> <a href="@Url.Action("DeleteFile", "ConferenceSettings", new {  key = p.Path,id =ViewData["id"]  }, null)">Удалить </a> <br />
+    </div>
+    }*@
+
+<section class="content-header">
+    <div class="container-fluid">
+
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Title</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <form asp-action="AddFile" asp-controller="ConferenceSettings" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+
+
+                <input name="ConferenceId" value="@ViewData["id"]" type="hidden" class="form-control" />
+
+                <div class="form-group">
+                    <label for="File">Отправить</label>
+                    <input type="file" class="form-control-file" name="File" id="File">
+                </div>
+
+
+
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <!-- /.card-footer-->
+        </form>
+    </div>
+    <!-- /.card -->
+
+
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Files</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>File Size</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+
+                    @foreach (var p in Model)
+                    {
+
+
+                        <tr>
+                            <td><a href="@Url.Action("GetVirtualFile", "ConferenceSettings", new {  key = p.Path }, null)" >@p.Name</a></td>
+                            <td>@p.Size</td>
+                            <td class="text-right py-0 align-middle">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="@Url.Action("GetVirtualFile", "ConferenceSettings", new {  key = p.Path }, null)" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                    <a href="@Url.Action("DeleteFile", "ConferenceSettings", new {  key = p.Path,id =ViewData["id"]  }, null)" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+
+</section>

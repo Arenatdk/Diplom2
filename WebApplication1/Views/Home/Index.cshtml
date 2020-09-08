@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebApplication1.Models.Conference>
+
+
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+    <section class="content-header">
+
+    </section>
+<div class="content">
+
+
+    <div class="card">
+
+        <hr class="m-0">
+        <!-- /.card-body -->
+        @*<div class="card-body py-3">
+
+            <div class="row">
+
+                <div class="col-10">
+                    <h2><a href="asd">asdasdasds</a></h2>
+                    К участию приглашаются студенты последних курсов университета (имеющие возможность пройти стажировку после окончания курса) со знанием основ .NET программирования.
+                    <div class="text-muted small mt-1">Started 25 days ago &nbsp;·&nbsp; <a href="javascript:void(0)" class="text-muted">Allie Rodriguez</a></div>
+                </div>
+                <div class="col-2 text-center">
+                    <img src="../../dist/img/user1-128x128.jpg" alt="" class=" img-bordered img-fluid   ">
+                </div>
+            </div>
+
+
+        </div>*@
+
+        @foreach (var item in Model)
+        {
+            <hr class="m-0">
+            <!-- /.card-body -->
+            <div class="card-body py-3">
+
+                <div class="row">
+
+                    <div class="col-10">
+                        <h2><a href="@Url.Action("Details", "Home", new { id = @item.Id }, null)">@item.Name</a></h2>
+                        @item.Subjects
+                        <div class="text-muted small mt-1">@item.DateStart.ToString("d") &nbsp;·&nbsp; <a href="javascript:void(0)" class="text-muted">@item.Place</a></div>
+                    </div>
+                    <div class="col-2 text-center">
+                        <img src="../../dist/img/user1-128x128.jpg" alt="" class=" img-bordered img-fluid   ">
+                    </div>
+                </div>
+
+
+            </div>
+
+        }
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+</div>
+
+
+@*<div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>*@

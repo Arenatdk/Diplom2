@@ -1,0 +1,82 @@
+﻿
+@model IEnumerable<WebApplication1.Models.CalendarEvent>
+<link href='~/packages/core/main.css' rel='stylesheet' />
+<link href='~/packages/list/main.css' rel='stylesheet' />
+<link href='~/packages/daygrid/main.css' rel='stylesheet' />
+@*<link href='~/packages/interaction/main.css' rel='stylesheet' />*@
+<link href='~/packages/timegrid/main.css' rel='stylesheet' />
+
+<script src='~/packages/core/main.js'></script>
+<script src='~/packages/list/main.js'></script>
+<script src='~/packages/daygrid/main.js'></script>
+<script src='~/packages/interaction/main.js'></script>
+<script src='~/packages/timegrid/main.js'></script>
+
+
+<script>
+        var calendar = "";
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+        var json = @Html.Raw(Json.Serialize(@Model));
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: ['list'],
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'listDay,listWeek,listMonth'
+            },
+
+            eventClick: function (info) {
+                var eventObj = info.event;
+                $.ajax({
+                   url: '@Url.Action("DeleteCalendarEvent", "ConferenceSettings")?id='+eventObj.id,
+                   data: {
+                       id: eventObj.id
+                   }
+                })
+                    .done(function (result) {
+                       
+                    })
+                eventObj.remove()
+
+
+            },
+            views: {
+
+                listDay: { buttonText: 'День' },
+                listWeek: { buttonText: 'Неделя' },
+                listMonth: { buttonText: 'Месяц' }
+            },
+            defaultView: 'listWeek',
+            locales: ['ruLocale', 'ruLocale'],
+            height: 650,
+
+
+            defaultDate: '@DateTime.Now.ToString("yyyy-MM-dd")',
+
+
+            //public int Id { get; set; }
+
+            //public int ConferenceId  { get; set; }
+            //public Conference Conference { get; set; }
+            //public string Title { get; set; }
+            //public string Description { get; set; }
+            //public DateTime Start { get; set; }
+            //public DateTime End { get; set; }
+            //public bool AllDay { get; set; }
+
+
+
+
+           // events: JSON.parse(JSON.stringify(json))
+            events: '@Url.Action("GetCalendarEvent", "ConferenceSettings", new { id = ViewData["id"]},null)'
+        });
+
+        calendar.render();
+       
+    });
+
+</script>
+
+
+<div id="calendar"></div>

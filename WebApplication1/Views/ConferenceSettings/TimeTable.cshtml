@@ -1,0 +1,168 @@
+﻿
+@{
+    Layout = "_SettingsLayout";
+}
+
+
+
+<section class="content-header">
+</section>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sticky-top mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Create Event</h3>
+                        </div>
+                        <div class="card-body" asp-action="CreateCalendarEvent" asp-controller="ConferenceSettings">
+                            @*<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+                                <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+                                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+                                <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />*@
+
+
+
+                            <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+                            <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+                            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+                            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+                            <div class="input-group">
+                                <form id="formsend" action="">
+
+                                    @*<input type="hidden" asp-for="Id" />*@
+                                    <input type="hidden" name="Start" id="Start" value="@DateTime.Now.Date" />
+                                    <input type="hidden" name="End" id="End"  value="@DateTime.Now.Date.AddMinutes(59).AddHours(23)" />
+                                    <input type="hidden" name="ConferenceId" id="ConferenceId" value="@ViewData["id"]" />
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control float-right" id="datetimes" name="datetimes">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Title</label>
+                                        <input type="text" class="form-control" name="Title" id="Title">
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" name="AllDay" id="AllDay" value="true" class="custom-control-input" >
+                                        <label class="custom-control-label" for="AllDay">Весь день</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+
+                                <script>
+                                    var Start =new Date().toISOString().slice(0,11)+"00:00:00";
+                                    var End = new Date().toISOString().slice(0, 11) + "23:59:00";
+                                    
+                                    $("#formsend").submit(function(e) {
+
+                                        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+                                        var form = $(this);
+                                        var url = form.attr('action');
+
+                                        $.ajax({
+                                               type: "POST",
+                                               url:"@Url.Action("CreateCalendarEvent", "ConferenceSettings")",
+                                               data: form.serialize(), // serializes the form's elements.
+                                               success: function(data)
+                                               {
+                                                   
+                                                   calendar.addEvent({
+                                                       id:data,
+                                                       title: $("#Title").val(),
+                                                       start: Start,
+                                                       end: End,
+                                                       allDay: $('#AllDay').is(':checked')
+                                                   });
+                                                   //alert($('#AllDay').is(':checked').val());
+                                                   //$("#calendar").fullCalendar('renderEvent',
+                                                   //    {
+                                                   //        title: 'Jopaaaaaaaaaaaaaaaaaaa',
+                                                   //        start: '2020-02-12T04:04:00',
+                                                   //        end: '2020-02-12T03:04:00',
+                                                   //        allDay: false,
+                                                   //    },
+                                                   //    true);
+                                                   //alert(data); // show response from the php script.
+                                               }
+                                             });
+
+
+                                    });
+
+
+                                    $('#datetimes').daterangepicker({
+                                        "timePicker": true,
+                                        "timePicker24Hour": true,
+                                        
+                                        "locale": {
+                                            
+                                            "format": "MM.DD H:mm",
+                                            "separator": " - ",
+                                            "applyLabel": "Сохранить",
+                                            "cancelLabel": "Назад",
+                                            "daysOfWeek": [
+                                                "Вс",
+                                                "Пн",
+                                                "Вт",
+                                                "Ср",
+                                                "Чт",
+                                                "Пт",
+                                                "Сб"
+                                            ],
+                                            "monthNames": [
+                                                "Январь",
+                                                "Февраль",
+                                                "Март",
+                                                "Апрель",
+                                                "Май",
+                                                "Июнь",
+                                                "Июль",
+                                                "Август",
+                                                "Сентябрь",
+                                                "Октябрь",
+                                                "Ноябрь",
+                                                "Декабрь"
+                                            ],
+                                            "firstDay": 1
+                                        },
+
+                                    }, function (start, end, label) {
+
+                                        $("#Start").val(start.format('DD.MM.YYYY HH:mm'));
+                                        $("#End").val(end.format('DD.MM.YYYY HH:mm:ss'));
+                                            Start = start.format('YYYY-MM-DDTHH:mm:ss');
+                                            End = end.format('YYYY-MM-DDTHH:mm');
+                                            
+                                        console.log("New date range selected: " + start.format('YYYY-MM-DD HH:mm') + " to " + end.format('YYYY-MM-DD HH:mm') + " (predefined range: " + label + ")");
+                                    });
+
+                                </script>
+                                <!-- /btn-group -->
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card card-primary">
+                    <div class="card-body p-0">
+                        <!-- THE CALENDAR -->
+                        @Html.Partial("_CalendarPartial")
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+</div>

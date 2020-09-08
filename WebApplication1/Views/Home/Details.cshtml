@@ -1,0 +1,62 @@
+﻿@model WebApplication1.Models.Conference
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@*
+    public int Id { get; set; }
+       public string Name { get; set; } // имя пользователя
+       public DateTime DateStart { get; set; }
+       public DateTime DateEnd { get; set; }
+       public string Place { get; set; }
+       public string Subjects { get; set; } //тематика
+       public string KeyWords { get; set; } // Ключевые слова
+*@
+    <div class="content">
+
+
+        @*
+        <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+
+                        <h1 class="m-0 text-dark">Dashboard v3</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v3</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div>
+        *@
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Default Card Example</h3>
+                <div class="card-tools">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <span class="badge badge-primary">Label</span>
+                </div>
+                <!-- /.card-tools -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <a href='@Url.Action("GoToConf", "Home", new {  id = Model.Id }, null)'  >GoToConf</a>
+                The body of the card
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                The footer of the card
+            </div>
+            <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+
+
+
+
+
+    </div>
